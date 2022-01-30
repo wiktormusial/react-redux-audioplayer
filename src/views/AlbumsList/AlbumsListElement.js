@@ -1,5 +1,11 @@
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { addToPlaylist } from '../../slices/player/playerSlice'
+
+
 export default function AlbumsListElement(props) {
   const { title, description, release_date, is_published, song_set } = props.item
+  const dispatch = useDispatch()
 
   let song_list
   if (song_set.length > 0) {
@@ -7,7 +13,7 @@ export default function AlbumsListElement(props) {
       return(
         <div key={song.id}>
            <p>{song.title}</p>
-           <p>Add to playlist</p>
+           <Link to="#" onClick={() => dispatch(addToPlaylist(song.song))}>Add to playlist</Link>
         </div>
       )
     })
