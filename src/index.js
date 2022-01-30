@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from './components/Header/Header';
 import Player from './views/Player/Player';
 import { store } from './store';
 import { Provider } from 'react-redux';
@@ -11,6 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
+        <Header/>
         <Routes>
           <Route path="/" element={<Player />}/>
         </Routes>
