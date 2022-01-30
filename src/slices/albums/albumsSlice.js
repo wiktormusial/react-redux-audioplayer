@@ -14,7 +14,7 @@ const albumsSlice = createSlice({
     builder
       .addCase(fetchAlbums.fulfilled, (state, action) => {
         state.status = "succedded"
-        state.albums.push(action.payload)
+        state.albums = state.albums.concat(action.payload)
       })
   }
 })
