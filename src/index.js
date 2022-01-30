@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Player from './views/Player/Player';
 import { store } from './store';
 import { Provider } from 'react-redux';
@@ -9,7 +10,11 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Player />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Player />}/>
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
