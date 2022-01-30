@@ -1,16 +1,17 @@
 import { useState } from 'react'
-import { useSelector } from "react-redux";
-import { getPlaylist } from '../../slices/player/playerSlice'
+import { useSelector, useDispatch } from "react-redux";
+import { getPlaylist, getSongId, incrementSongId, decrementSongId} from '../../slices/player/playerSlice'
 
 export default function Player() {
-  const [songId, setSongId] = useState(0)
+  const dispatch = useDispatch()
   const playlist = useSelector(getPlaylist)
+  const songId = useSelector(getSongId)
   const player = document.getElementById('player')
   const song = playlist[songId].song
 
   function changeSong() {
     if (songId < playlist.length - 1) {
-      setSongId(songId + 1)
+      dispatch(incrementSongId())
       player.load()
       player.play()
     }
@@ -18,7 +19,7 @@ export default function Player() {
 
   function changeSongBackwards() {
     if (songId > 0) {
-      setSongId(songId - 1)
+      dispatch(decrementSongId())
       player.load()
       player.play()
     }
@@ -26,7 +27,7 @@ export default function Player() {
 
   function ended() {
     if (songId < playlist.length - 1) {
-      setSongId(songId + 1)
+      dispatch(incrementSongId())
       player.load()
       player.play()
     }

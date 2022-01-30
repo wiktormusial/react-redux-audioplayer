@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+  songId: 0,
   playlist: [
     {
       name: 'test_name',
@@ -17,12 +18,20 @@ const playerSlice = createSlice({
       state.playlist.push(action.payload)
     },
     addToPlaylistAndRemoveAll(state, action) {
+      state.songId = 0
       state.playlist = action.payload
+    },
+    incrementSongId(state) {
+      state.songId = state.songId + 1
+    },
+    decrementSongId(state) {
+      state.songId = state.songId - 1
     }
   }
 })
 
 export const getPlaylist = (state) => state.player.playlist
-export const { addToPlaylist, addToPlaylistAndRemoveAll } = playerSlice.actions
+export const getSongId = (state) => state.player.songId
+export const { addToPlaylist, addToPlaylistAndRemoveAll, incrementSongId, decrementSongId } = playerSlice.actions
 
 export default playerSlice.reducer
