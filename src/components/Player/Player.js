@@ -6,7 +6,7 @@ export default function Player() {
   const [songId, setSongId] = useState(0)
   const playlist = useSelector(getPlaylist)
   const player = document.getElementById('player')
-  const song = playlist[songId]
+  const song = playlist[songId].song
 
   function changeSong() {
     if (songId < playlist.length - 1) {
