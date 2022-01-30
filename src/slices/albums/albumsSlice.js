@@ -13,10 +13,12 @@ const albumsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAlbums.fulfilled, (state, action) => {
+        state.status = "succedded"
         state.albums.push(action.payload)
       })
   }
 })
 
+export const getAlbumsStatus = (state) => state.albums.status
 export const getAllAlbums = (state) => state.albums.albums
 export default albumsSlice.reducer
