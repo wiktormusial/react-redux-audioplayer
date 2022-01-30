@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { getPlaylist, getSongId, incrementSongId, decrementSongId} from '../../slices/player/playerSlice'
+import Playlist from '../Playlist/Playlist'
 
 export default function Player() {
   const dispatch = useDispatch()
@@ -39,7 +40,8 @@ export default function Player() {
         <source src={song}/>
       </audio><br/>
       <button onClick={() => changeSongBackwards()}>Back</button>
-      <button onClick={() => changeSong()}>Next song</button>
+      <button onClick={() => changeSong()}>Next song</button><br/>
+      <Playlist/>
     </div>
   )
 }

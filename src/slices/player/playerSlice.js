@@ -4,7 +4,8 @@ const initialState = {
   songId: 0,
   playlist: [
     {
-      name: 'test_name',
+      id: 0,
+      title: 'asd',
       song: 'http://localhost:8000/uploads/songs/2022/01/29/Ensoniq-ZR-76-08-Dope-92.wav'
     }
   ]
