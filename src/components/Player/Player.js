@@ -16,6 +16,15 @@ export default function Player() {
     if (playPromise !== undefined) {
       playPromise.then(_ => {
         player.play()
+        player.addEventListener('ended', (event) => {
+          if (songId < playlist.length - 1) {
+            dispatch(incrementSongId())
+            console.log(song.id)
+            setCurrentSong(playlist.find((item) => item.id === song.id + 1).title)
+            player.load()
+            player.play()
+          }
+        });
       })
     }
   }
@@ -29,45 +38,29 @@ export default function Player() {
     }
   }
 
-  function changeSong(nextSong) {
+  function changeSong() {
     if (songId < playlist.length - 1) {
       dispatch(incrementSongId())
       const playPromise = player.play()
       if (playPromise !== undefined) {
         playPromise.then(_ => {
-          player.load()
           player.play()
-          setCurrentSong(playlist.find((item) => item.id === nextSong).title)
         })
       }
+      setCurrentSong(playlist.find((item) => item.id === song.id + 1).title)
     }
   }
 
-  function changeSongBackwards(nextSong) {
+  function changeSongBackwards() {
     if (songId > 0) {
       dispatch(decrementSongId())
       const playPromise = player.play()
       if (playPromise !== undefined) {
         playPromise.then(_ => {
-          player.load()
           player.play()
-          setCurrentSong(playlist.find((item) => item.id === nextSong).title)
         })
       }
-    }
-  }
-
-  function ended(nextSong) {
-    if (songId < playlist.length - 1) {
-      dispatch(incrementSongId())
-      const playPromise = player.play()
-      if (playPromise !== undefined) {
-        playPromise.then(_ => {
-          player.load()
-          player.play()
-          setCurrentSong(playlist.find((item) => item.id === nextSong).title)
-        })
-      }
+      setCurrentSong(playlist.find((item) => item.id === song.id - 1).title)
     }
   }
 
@@ -75,12 +68,12 @@ export default function Player() {
     <div>
       {currentSong}
       <br/>
-      <audio onEnded={ended} id="player" src={song.song}>
+      <audio id="player" src={song.song}>
       </audio>
       <button id="play" onClick={() => playerPlay()}>Start</button>
       <button onClick={() => playerPause()}>Pause</button>
-      <button onClick={() => changeSongBackwards(song.id-1)}>Back</button>
-      <button onClick={() => changeSong(song.id+1)}>Next song</button><br/>
+      <button onClick={() => changeSongBackwards()}>Back</button>
+      <button onClick={() => changeSong()}>Next song</button><br/>
       <Playlist/>
     </div>
   )
