@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from './components/Header/Header';
-import Player from './views/Player/Player';
+import AlbumsList from './views/AlbumsList/AlbumsList';
 import { store } from './store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
@@ -14,7 +14,7 @@ ReactDOM.render(
       <BrowserRouter>
         <Header/>
         <Routes>
-          <Route path="/" element={<Player />}/>
+          <Route path="/" element={<AlbumsList />}/>
         </Routes>
       </BrowserRouter>
     </Provider>
