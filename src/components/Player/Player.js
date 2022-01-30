@@ -8,39 +8,79 @@ export default function Player() {
   const playlist = useSelector(getPlaylist)
   const songId = useSelector(getSongId)
   const player = document.getElementById('player')
-  const song = playlist[songId].song
+  const song = playlist[songId]
+  const [currentSong, setCurrentSong] = useState(song.title)
 
-  function changeSong() {
-    if (songId < playlist.length - 1) {
-      dispatch(incrementSongId())
-      player.load()
-      player.play()
+  function playerPlay() {
+    const playPromise = player.play()
+    if (playPromise !== undefined) {
+      playPromise.then(_ => {
+        player.play()
+      })
     }
   }
 
-  function changeSongBackwards() {
+  function playerPause() {
+    const playPromise = player.pause()
+    if (playPromise !== undefined) {
+      playPromise.then(_ => {
+        player.pause()
+      })
+    }
+  }
+
+  function changeSong(nextSong) {
+    if (songId < playlist.length - 1) {
+      dispatch(incrementSongId())
+      const playPromise = player.play()
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          player.load()
+          player.play()
+          setCurrentSong(playlist.find((item) => item.id === nextSong).title)
+        })
+      }
+    }
+  }
+
+  function changeSongBackwards(nextSong) {
     if (songId > 0) {
       dispatch(decrementSongId())
-      player.load()
-      player.play()
+      const playPromise = player.play()
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          player.load()
+          player.play()
+          setCurrentSong(playlist.find((item) => item.id === nextSong).title)
+        })
+      }
     }
   }
 
-  function ended() {
+  function ended(nextSong) {
     if (songId < playlist.length - 1) {
       dispatch(incrementSongId())
-      player.load()
-      player.play()
+      const playPromise = player.play()
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          player.load()
+          player.play()
+          setCurrentSong(playlist.find((item) => item.id === nextSong).title)
+        })
+      }
     }
   }
 
   return (
     <div>
-      <audio onEnded={ended} id="player" controls>
-        <source src={song}/>
-      </audio><br/>
-      <button onClick={() => changeSongBackwards()}>Back</button>
-      <button onClick={() => changeSong()}>Next song</button><br/>
+      {currentSong}
+      <br/>
+      <audio onEnded={ended} id="player" src={song.song}>
+      </audio>
+      <button id="play" onClick={() => playerPlay()}>Start</button>
+      <button onClick={() => playerPause()}>Pause</button>
+      <button onClick={() => changeSongBackwards(song.id-1)}>Back</button>
+      <button onClick={() => changeSong(song.id+1)}>Next song</button><br/>
       <Playlist/>
     </div>
   )
